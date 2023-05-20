@@ -16,9 +16,11 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member(150L, "flush");
-            em.persist(member);
-            em.flush();
+            Member member = em.find(Member.class, 150L);
+            member.setName("준영속");
+
+            em.detach(member);
+
             System.out.println("===================");
 
 
