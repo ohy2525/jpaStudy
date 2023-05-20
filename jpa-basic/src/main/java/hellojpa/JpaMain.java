@@ -16,8 +16,10 @@ public class JpaMain {
 
         try {
 
-            Member findMember1 = em.find(Member.class, 1L); // DB 에서 조회
-            Member findMember2 = em.find(Member.class, 1L); // 1차 개시에서 조회
+            Member member = new Member(150L, "flush");
+            em.persist(member);
+            em.flush();
+            System.out.println("===================");
 
 
             tx.commit();
