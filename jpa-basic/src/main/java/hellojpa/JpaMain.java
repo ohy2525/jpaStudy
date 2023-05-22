@@ -16,14 +16,6 @@ public class JpaMain {
 
         try {
 
-            Member member = em.find(Member.class, 150L);
-            member.setName("준영속");
-
-            em.detach(member);
-
-            System.out.println("===================");
-
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
