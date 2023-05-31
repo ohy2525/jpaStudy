@@ -25,7 +25,7 @@ public class Team {
         member.setTeam(this);
         members.add(member);
     }
-    
+
     public void setMembers(List<Member> members) {
         this.members = members;
     }
