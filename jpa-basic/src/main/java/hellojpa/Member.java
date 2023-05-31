@@ -1,6 +1,6 @@
 package hellojpa;
 import javax.persistence.*;
-import java.util.Date;
+
 @Entity
 public class Member {
 
@@ -36,6 +36,13 @@ public class Member {
 
     public Team getTeam() {
         return team;
+    }
+
+    public void changeTeam(Team team) {   //관례에 의해 로직이 들어가면 set안씀
+        this.team = team;
+
+        //연관관계 편의 메소드
+        team.getMembers().add(this);
     }
 
     public void setTeam(Team team) {
