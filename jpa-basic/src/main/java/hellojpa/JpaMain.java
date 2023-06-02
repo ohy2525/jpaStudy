@@ -25,8 +25,8 @@ public class JpaMain {
             member.changeTeam(team);
             em.persist(member);
 
-//            em.flush();
-//            em.clear();
+            em.flush();
+            em.clear();
 
             //조회
             Member findMember = em.find(Member.class, member.getId());
