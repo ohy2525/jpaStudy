@@ -21,7 +21,6 @@ public class Member {
     @OneToOne
     @JoinColumn(name = "LOCKER_ID")
     private Locker locker;
-
     public Long getId() {
         return id;
     }
