@@ -15,15 +15,7 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Child child1 = new Child();
-            Child child2 = new Child();
-
-            Parent parent = new Parent();
-
-            parent.addChild(child1);
-            parent.addChild(child2);
-
-            em.persist(parent);
+            
 
             tx.commit();
         } catch (Exception e) {
