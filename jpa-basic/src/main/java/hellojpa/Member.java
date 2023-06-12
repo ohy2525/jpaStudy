@@ -1,8 +1,9 @@
 package hellojpa;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class Member extends BaseEntity{
+public class Member {
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -11,12 +12,11 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
+    @Embedded
+    private Period workPeriod;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Team team;
+    @Embedded
+    private Address homeAddress;
 
     public Long getId() {
         return id;
@@ -34,18 +34,19 @@ public class Member extends BaseEntity{
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void changeTeam(Team team) {   //관례에 의해 로직이 들어가면 set안씀
-        this.team = team;
-
-        //연관관계 편의 메소드
-        team.getMembers().add(this);
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
