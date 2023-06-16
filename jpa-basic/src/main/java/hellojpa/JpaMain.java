@@ -16,10 +16,6 @@ public class JpaMain {
 
         try {
 
-
-
-
-            
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
