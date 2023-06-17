@@ -15,6 +15,17 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Member member = new Member();
+            member.setUsername("name");
+            member.setHomeAddress(new Address("ee", "ee", "ee"));
+
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("피자");
+
+            member.getAddressHistory().add(new Address("qq", "qq", "qq"));
+            member.getAddressHistory().add(new Address("tt", "tt", "tt"));
+
+            em.persist(member);
 
             tx.commit();
         } catch (Exception e) {
