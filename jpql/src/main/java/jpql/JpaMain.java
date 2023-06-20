@@ -17,8 +17,11 @@ public class JpaMain {
             member.setUsername("member1");
             em.persist(member);
 
-            TypedQuery<Member> query = em.createQuery("select m from Member m", Member.class);
-            
+            em.flush();
+            em.clear();
+
+            List<Member> result = em.createQuery("select m from Member m", Member.class)
+                    .getResultList();
 
             tx.commit();
         } catch (Exception e) {
