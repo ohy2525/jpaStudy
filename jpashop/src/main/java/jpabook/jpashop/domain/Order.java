@@ -22,4 +22,8 @@ public class Order {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 }
