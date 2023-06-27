@@ -1,22 +1,29 @@
 package jpabook.jpashop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jpabook.jpashop.domain.item.Item;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name = "order_item")
+@Getter
+@Setter
 public class OrderItem {
+
+    @Id @GeneratedValue
+    @Column(name = "order_item_id")
+    private Long id;
+
+    private Item item;
+
     @ManyToOne
-    @JoinColumn(name = "order_order_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
-    public Order getOrder() {
-        return order;
-    }
+    private int orderPrice; //주문 가격
 
-    public void setOrder(Order order) {
-        this.order = order;
-    }
+    private int count; //주문 수량
+
+
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class Order {
     @JoinColumn(name = "member_id")   //연관관계 주인
     private Member member;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "delivery_id")
     private Delivery delivery;
+
+    private LocalDateTime orderDate;
+
+    private OrderStatus status; // 주문상태 ORDER, CANCEL
 }
