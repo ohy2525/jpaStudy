@@ -83,10 +83,14 @@ public class Order {
      * 전체 주문 가격 조회
      */
     public int getTotalPrice() {
-        int totalPrice = 0;
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+
+        /*int totalPrice = 0;
         for (OrderItem orderItem : orderItems) {
             totalPrice += orderItem.getTotalPrice();
         }
-        return totalPrice;
+        return totalPrice;*/
     }
 }
