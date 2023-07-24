@@ -21,7 +21,7 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    //변경감지
+    //변경 감지
     @Transactional
     public void updateItem(Long itemId, String name, int price, int stockQuantity) {
         Item findItem = itemRepository.findOne(itemId);
