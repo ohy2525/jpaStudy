@@ -18,6 +18,7 @@ public class Member {
     protected Member() {}
 
     public Member(String username) {
+        
         this.username = username;
     }
 }
