@@ -280,6 +280,27 @@ class MemberRepositoryTest {
         System.out.println("findMember.updatedDate = " + findMember.getLastModifiedDate());
         System.out.println("findMember.createdBy = " + findMember.getCreatedBy());
         System.out.println("findMember.updatedBy = " + findMember.getLastModifiedBy());
+    }
 
+    @Test
+    public void projections() {
+        //given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member m1 = new Member("m1", 10, teamA);
+        Member m2 = new Member("m2", 10, teamA);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        List<UsernameOnly> result = memberRepository.findProjectionByUsername("m1");
+        for (UsernameOnly usernameOnly : result) {
+            System.out.println("usernameOnly = " + usernameOnly);
+        }
     }
 }
