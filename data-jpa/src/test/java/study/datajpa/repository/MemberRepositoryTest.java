@@ -303,4 +303,21 @@ class MemberRepositoryTest {
             System.out.println("usernameOnly = " + usernameOnly);
         }
     }
+
+    @Test
+    public void nativeQuery() {
+        //given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member m1 = new Member("m1", 10, teamA);
+        Member m2 = new Member("m2", 10, teamA);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+
+        //when
+        Member result = memberRepository.findByNativeQuery("m1");
+        System.out.println("result = " + result);
+    }
 }
