@@ -14,6 +14,8 @@ import study.querydsl.entity.QTeam;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 import java.util.List;
 
@@ -237,42 +239,35 @@ public class QuerydslBasicTest {
                 .containsExactly("teamA", "teamB");
     }
 
-    /**
-     * 예) 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조인
-     * JPQL : select m, t from Member m left join m.team t on t.name = "teamA"
-     */
-    @Test
-    public void join_on_filtering() {
-        List<Tuple> result = queryFactory
-                .select(member, team)
-                .from(member)
-                .leftJoin(member.team, team)
-                .on(team.name.eq("teamA"))
-                .fetch();
+    @PersistenceUnit
+    EntityManagerFactory emf;
 
-        for (Tuple tuple : result) {
-            System.out.println("tuple = " + tuple);
-        }
+    @Test
+    public void fetchJoinNo() {
+        em.flush();
+        em.clear();
+
+        Member findMember = queryFactory
+                .selectFrom(member)
+                .where(member.username.eq("member1"))
+                .fetchOne();
+
+        boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
+        assertThat(loaded).as("페치 조인 미적용").isFalse();
     }
 
-    /**
-     * 연관관계가 없는 엔티티 외부 조인
-     * 회원의 이름이 팀 이름과 같은 대상을 외부 조인
-     */
     @Test
-    public void join_on_no_relation() {
-        em.persist(new Member("teamA"));
-        em.persist(new Member("teamB"));
-        em.persist(new Member("teamC"));
+    public void fetchJoinUse() {
+        em.flush();
+        em.clear();
 
-        List<Tuple> result = queryFactory
-                .select(member, team)
-                .from(member)
-                .leftJoin(team).on(member.username.eq(team.name))
-                .fetch();
+        Member findMember = queryFactory
+                .selectFrom(member)
+                .join(member.team, team).fetchJoin()
+                .where(member.username.eq("member1"))
+                .fetchOne();
 
-        for (Tuple tuple : result) {
-            System.out.println("tuple = " + tuple);
-        }
+        boolean loaded = emf.getPersistenceUnitUtil().isLoaded(findMember.getTeam());
+        assertThat(loaded).as("페치 조인 미적용").isTrue();
     }
 }
